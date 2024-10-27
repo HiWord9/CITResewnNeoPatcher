@@ -1,0 +1,73 @@
+plugins {
+    id 'java-library'
+}
+
+allprojects {
+    version = mod_version
+    group = mod_group_id
+}
+
+base {
+    archivesName = mod_id
+}
+
+repositories {
+    maven {
+        url "https://maven.neoforged.net/releases"
+    }
+    maven {
+        url "https://libraries.minecraft.net/"
+    }
+    maven {
+        name = "Sinytra"
+        url = "https://maven.su5ed.dev/releases"
+    }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+}
+
+configurations {
+    jij {}
+}
+
+dependencies {
+    compileOnly("net.neoforged.fancymodloader:loader:${fancy_mod_loader_version}")
+    compileOnly("cpw.mods:securejarhandler:3.0.8")
+    compileOnly("org.jetbrains:annotations:24.1.0")
+    jij(project(path: ":mod", configuration: "builtModJar"))
+
+    compileOnly "maven.modrinth:connector:2.0.0-beta.3+1.21.1"
+    compileOnly "org.sinytra.forgified-fabric-api:forgified-fabric-api:0.104.0+2.0.14+1.21.1"
+//    compileOnly "maven.modrinth:cit-resewn:1.2.2+1.21"
+//    compileOnly "maven.modrinth:cit-resewn-defaults:1.2.2+1.21"
+
+    // remapped by connector citresewn jars for neoforge
+    // todo: automate remapping
+    compileOnly files("libs/citresewn-1.2.2+1.21_mapped_moj_1.21.1.jar")
+    compileOnly files("libs/citresewn-1.2.2+1.21\$citresewn-defaults-1.2.2+1.21_mapped_moj_1.21.1.jar")
+}
+
+jar {
+    manifest {
+        attributes["FMLModType"] = "LIBRARY"
+        attributes["Automatic-Module-Name"] = "citrnp_locator"
+    }
+    into("META-INF/mod") {
+        from(configurations.jij) {
+            rename { String filename ->
+                return "citrnp-mod-file.jar"
+            }
+        }
+    }
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+tasks.register('idePostSync') {}

@@ -1,0 +1,45 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+
+license = "${mod_license_link}/${mod_license_version}"
+issueTrackerURL="${mod_issue_tracker}"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+description = '''${mod_description}'''
+authors = "${mod_authors}"
+displayURL = "${mod_homepage_modrinth}"
+logoFile="${mod_id}.png"
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+[[dependencies."${mod_id}"]]
+modId = "connector"
+type = "required"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "citresewn"
+type = "required"
+versionRange = "*" # version is checked on loading
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neo_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
