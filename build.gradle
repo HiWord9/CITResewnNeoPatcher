@@ -53,6 +53,8 @@ dependencies {
 }
 
 jar {
+    archiveFileName = "${mod_id}-${version}-${citresewn_version}.jar"
+
     manifest {
         attributes["FMLModType"] = "LIBRARY"
         attributes["Automatic-Module-Name"] = "citrnp_locator"
