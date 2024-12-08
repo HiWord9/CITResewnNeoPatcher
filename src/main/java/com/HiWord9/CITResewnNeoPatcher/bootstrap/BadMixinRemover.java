@@ -18,6 +18,7 @@ public class BadMixinRemover {
     final static String FABRIC_MOD_JSON = "fabric.mod.json";
     final static String PATCHED_PREFIX = "patched_";
     final static String DISABLED_SUFFIX = ".disabled_by_" + CITResewnNeoPatcherBootstrap.MODID;
+    final static String JAR_SUFFIX = ".jar";
     final static String CITR_ID = "citresewn";
     final static Path MODS_DIR_PATH = FMLPaths.MODSDIR.get();
     final static String MIXINS_CONFIG_FILE_NAME = "citresewn-defaults.mixins.json";
@@ -61,17 +62,18 @@ public class BadMixinRemover {
         assert files != null;
         for (File modFile : files) {
             if (modFile.isDirectory()) continue;
+            String fileName = modFile.getName();
+            if (!fileName.endsWith(JAR_SUFFIX) && !fileName.endsWith(DISABLED_SUFFIX)) continue;
 
             JsonObject currentFabricConfig = getFabricConfig(modFile);
             if (currentFabricConfig == null) continue;
 
             if (!isCITR(getId(currentFabricConfig))) continue;
 
-            String fileName = modFile.getName();
             CITRCandidate candidate = new CITRCandidate(modFile, currentFabricConfig);
             if (fileName.startsWith(PATCHED_PREFIX)) {
                 patchedCandidates.add(candidate);
-            } else if (fileName.endsWith(".jar")) {
+            } else if (fileName.endsWith(JAR_SUFFIX)) {
                 originalCandidates.add(candidate);
             } else if (fileName.endsWith(DISABLED_SUFFIX)) {
                 disabledCandidates.add(candidate);
