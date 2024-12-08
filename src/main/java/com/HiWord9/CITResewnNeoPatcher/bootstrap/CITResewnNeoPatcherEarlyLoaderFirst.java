@@ -1,6 +1,7 @@
 package com.HiWord9.CITResewnNeoPatcher.bootstrap;
 
 import cpw.mods.jarhandling.JarContents;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforgespi.locating.*;
 
 import java.net.URL;
@@ -10,7 +11,6 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class CITResewnNeoPatcherEarlyLoaderFirst implements IDependencyLocator {
-    public static boolean failed = false;
 
     @Override
     public int getPriority() {
@@ -26,6 +26,7 @@ public class CITResewnNeoPatcherEarlyLoaderFirst implements IDependencyLocator {
             loadMainMod(pipeline);
         } catch (Exception e) {
             CITResewnNeoPatcherBootstrap.LOGGER.error("Exception on First CITResewnNeoPatcher early load", e);
+            CITResewnNeoPatcherBootstrap.LOGGER.error("Mod files: {}", FMLPaths.MODSDIR.get());
             throw new RuntimeException(e);
         }
     }
