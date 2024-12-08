@@ -20,7 +20,7 @@ public class BadMixinRemover {
     final static String DISABLED_SUFFIX = ".disabled_by_" + CITResewnNeoPatcherBootstrap.MODID;
     final static String JAR_SUFFIX = ".jar";
     final static String CITR_ID = "citresewn";
-    final static Path MODS_DIR_PATH = FMLPaths.MODSDIR.get();
+    public final static Path MODS_DIR_PATH = FMLPaths.MODSDIR.get();
     final static String MIXINS_CONFIG_FILE_NAME = "citresewn-defaults.mixins.json";
     final static Path TEMP_DIR = MODS_DIR_PATH.resolve("." + CITResewnNeoPatcherBootstrap.MODID);
     final static Path ORIGINAL_MIXINS_CONFIG_COPY = TEMP_DIR.resolve("original_" + MIXINS_CONFIG_FILE_NAME);
