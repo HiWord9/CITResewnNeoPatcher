@@ -63,7 +63,7 @@ public class BadMixinRemover {
         for (File modFile : files) {
             if (modFile.isDirectory()) continue;
             String fileName = modFile.getName();
-            if (!fileName.endsWith(JAR_SUFFIX) && !fileName.endsWith(DISABLED_SUFFIX)) continue;
+            if (shouldReadModFile(fileName)) continue;
 
             JsonObject currentFabricConfig;
             try {
@@ -155,6 +155,10 @@ public class BadMixinRemover {
         }
 
         if (!goodEnding) throw new ModFileLoadingException("Could not find any CITResewn Jar file in Mods dir");
+    }
+
+    public static boolean shouldReadModFile(String fileName) {
+        return !fileName.endsWith(JAR_SUFFIX) && !fileName.endsWith(DISABLED_SUFFIX);
     }
 
     private static void populateFields(CITRCandidate candidate) {
