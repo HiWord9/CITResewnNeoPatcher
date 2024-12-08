@@ -63,7 +63,7 @@ public class BadMixinRemover {
         for (File modFile : files) {
             if (modFile.isDirectory()) continue;
             String fileName = modFile.getName();
-            if (shouldReadModFile(fileName)) continue;
+            if (!shouldReadModFile(fileName)) continue;
 
             JsonObject currentFabricConfig;
             try {
@@ -158,7 +158,7 @@ public class BadMixinRemover {
     }
 
     public static boolean shouldReadModFile(String fileName) {
-        return !fileName.endsWith(JAR_SUFFIX) && !fileName.endsWith(DISABLED_SUFFIX);
+        return fileName.endsWith(JAR_SUFFIX) || fileName.endsWith(DISABLED_SUFFIX);
     }
 
     private static void populateFields(CITRCandidate candidate) {
