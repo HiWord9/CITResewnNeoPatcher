@@ -52,7 +52,7 @@ public class BadMixinRemover {
         Files.move(currentCitrPath, originalCitrPath);
     }
 
-    private static void discoverCITR() throws Exception {
+    private static void discoverCITR() {
         ArrayList<CITRCandidate> originalCandidates = new ArrayList<>();
         ArrayList<CITRCandidate> patchedCandidates = new ArrayList<>();
         ArrayList<CITRCandidate> disabledCandidates = new ArrayList<>();
@@ -65,7 +65,13 @@ public class BadMixinRemover {
             String fileName = modFile.getName();
             if (!fileName.endsWith(JAR_SUFFIX) && !fileName.endsWith(DISABLED_SUFFIX)) continue;
 
-            JsonObject currentFabricConfig = getFabricConfig(modFile);
+            JsonObject currentFabricConfig;
+            try {
+                currentFabricConfig = getFabricConfig(modFile);
+            } catch (Exception e) {
+                CITResewnNeoPatcherBootstrap.LOGGER.error("Error while reading fabric.mod.json from {}, ignoring", modFile.getName(), e);
+                continue;
+            }
             if (currentFabricConfig == null) continue;
 
             if (!isCITR(getId(currentFabricConfig))) continue;
