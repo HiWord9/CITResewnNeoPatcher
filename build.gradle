@@ -39,6 +39,9 @@ dependencies {
     compileOnly("net.neoforged.fancymodloader:loader:${fancy_mod_loader_version}")
     compileOnly("cpw.mods:securejarhandler:3.0.8")
     compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly("org.ow2.asm:asm:${asm_version}")
+    compileOnly("org.ow2.asm:asm-tree:${asm_version}")
+    compileOnly("org.ow2.asm:asm-commons:${asm_version}")
     jij(project(path: ":mod", configuration: "builtModJar"))
 
     compileOnly "maven.modrinth:connector:2.0.0-beta.3+1.21.1"

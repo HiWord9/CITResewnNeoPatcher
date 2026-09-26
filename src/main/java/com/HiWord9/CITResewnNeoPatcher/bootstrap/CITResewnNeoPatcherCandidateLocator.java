@@ -42,13 +42,13 @@ public class CITResewnNeoPatcherCandidateLocator implements IModFileCandidateLoc
     // Returns the path of the original citresewn-*.jar as seen by the NIO filesystem,
     // so the path is identity-equal to what ModsFolderLocator would use in its scan.
     private static @Nullable Path findOriginalCitrJar() {
-        try (var stream = Files.list(BadMixinRemover.MODS_DIR_PATH)) {
+        try (var stream = Files.list(CITRFiles.MODS_DIR_PATH)) {
             return stream
                     .filter(p -> {
                         String name = p.getFileName().toString();
-                        return name.endsWith(BadMixinRemover.JAR_SUFFIX) && !name.startsWith(BadMixinRemover.PATCHED_PREFIX);
+                        return name.endsWith(CITRFiles.JAR_SUFFIX);
                     })
-                    .filter(p -> BadMixinRemover.getCitrFabricConfig(p.toFile()) != null)
+                    .filter(p -> CITRFiles.getCitrFabricConfig(p.toFile()) != null)
                     .findFirst()
                     .orElse(null);
         } catch (IOException e) {
