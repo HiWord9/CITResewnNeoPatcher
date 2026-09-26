@@ -21,7 +21,7 @@ public class MixinCancellerExtension implements IExtension {
 
     private static final Set<String> CANCELLED_MIXINS = Set.of(
             // replaced by restored.HumanoidArmorLayerMixin
-            // Connector mixin safeguard is patched to ignore it in bootstrap's ConnectorSafeguardFilter
+            // Connector mixin safeguard is patched to ignore it in bootstrap's ConnectorSafeguardTemplate
             "shcm.shsupercm.fabric.citresewn.defaults.mixin.types.armor.ArmorFeatureRendererMixin"
     );
 
