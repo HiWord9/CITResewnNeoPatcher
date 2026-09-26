@@ -20,8 +20,6 @@ public class CITResewnNeoPatcherEarlyLoader implements IDependencyLocator {
     public void scanMods(List<IModFile> loadedMods, IDiscoveryPipeline pipeline) {
         CITResewnNeoPatcherBootstrap.LOGGER.info("CITResewnNeoPatcher early load, patching Connector mixin safeguard and loading main mod");
 
-        checkCITR();
-
         try {
             ConnectorSafeguardPatch.apply();
         } catch (LinkageError e) {
@@ -33,25 +31,6 @@ public class CITResewnNeoPatcherEarlyLoader implements IDependencyLocator {
         } catch (Exception e) {
             CITResewnNeoPatcherBootstrap.LOGGER.error("Exception on CITResewnNeoPatcher early load", e);
             throw new RuntimeException(e);
-        }
-    }
-
-    private static void checkCITR() {
-        List<CITRFiles.CITRCandidate> candidates = CITRFiles.findCITRCandidates();
-        if (candidates.size() > 1) {
-            CITResewnNeoPatcherBootstrap.LOGGER.error("Only one CITResewn Jar have to be in mods folder");
-            throw new ModFileLoadingException("Multiple CITResewn Jars found");
-        } else if (candidates.isEmpty()) {
-            throw new ModFileLoadingException("Could not find any CITResewn Jar file in Mods dir");
-        }
-
-        String version = CITRFiles.getVersion(candidates.getFirst().fabricModJson());
-        if (!CITRFiles.isCompatible(version)) {
-            CITResewnNeoPatcherBootstrap.LOGGER.error(
-                    "CITResewnNeoPatcher requires CITResewn version range {}, but found {}",
-                    CITResewnNeoPatcherBootstrap.CITR_VERSION_RANGE, version
-            );
-            throw new ModFileLoadingException("Incompatible CITResewn version");
         }
     }
 
